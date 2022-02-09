@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Nette;
+use stdClass;
 
 final class PostFacade
 {
@@ -21,5 +22,29 @@ final class PostFacade
 			->table('posts')
 			->where('created_at < ', new \DateTime)
 			->order('created_at DESC');
+	}
+
+	public function getPostById(int $postId)
+	{
+		$post = $this->database
+			->table('posts')
+			->get($postId);
+
+		if (!$post) {
+			$this->error('Post not found');
+		}
+		return $post;
+	}
+
+	public function getComments(int $postId, \stdClass $data)
+	{
+
+		$this->database->table('comments')->insert([
+			'post_id' => $postId,
+			'name' => $data->name,
+			'email' => $data->email,
+			'content' => $data->content,
+		]);
+		return;
 	}
 }

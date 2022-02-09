@@ -2,6 +2,7 @@
 
 namespace App\Presenters;
 
+use App\Model\PostFacade;
 use Nette;
 use Nette\Application\UI\Form;
 
@@ -9,9 +10,11 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 {
 	private Nette\Database\Explorer $database;
 
-	public function __construct(Nette\Database\Explorer $database)
+	private PostFacade $facade;
+
+	public function __construct(PostFacade $facade)
 	{
-		$this->database = $database;
+		$this->facade = $facade;
 	}
 
 	protected function createComponentPostForm(): Form
@@ -30,13 +33,9 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 
 	public function renderEdit(int $postId): void
 	{
-		$post = $this->database
-			->table('posts')
-			->get($postId);
+		$post = $this->facade
+				->getPostById($postId);
 
-		if (!$post) {
-			$this->error('Post not found');
-		}
 
 		$this->getComponent('postForm')
 			->setDefaults($post->toArray());
