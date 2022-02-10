@@ -49,8 +49,8 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 	public function commentFormSucceeded(\stdClass $data): void
 	{
 		$postId = $this->getParameter('postId'); 
-				  $this->facade
-				->getComments(int $postId, \stdClass $data); 
+				 
+		$this->facade->addComment($postId, $data);		
 
 		$this->flashMessage('Děkuji za komentář', 'success');
 		$this->redirect('this');
