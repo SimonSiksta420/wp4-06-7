@@ -36,7 +36,7 @@ final class PostFacade
 		return $post;
 	}
 
-	public function getComments(int $postId, \stdClass $data)
+	public function addComment(int $postId, \stdClass $data)
 	{
 
 		$this->database->table('comments')->insert([
@@ -46,6 +46,14 @@ final class PostFacade
 			'content' => $data->content,
 		]);
 		return;
+	}
+
+	public function getComments(int $postId)
+	{
+		return $this->database
+		->table('comments')
+		->where('post_id', $postId);
+		
 	}
 
 	public function editPost(int $postId, array $data)

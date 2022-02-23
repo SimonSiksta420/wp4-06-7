@@ -49,7 +49,7 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 		if ($postId) {
 			$post = $this->facade->editPost($postId, $data);
 		} else {
-			$post = $this->facade->insertPost(array $data);
+			$post = $this->facade->insertPost($data);
 		}	
 
 		$this->flashMessage("Příspěvek byl úspěšně publikován.", 'success');
