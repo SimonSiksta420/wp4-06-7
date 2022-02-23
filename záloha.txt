@@ -16,3 +16,16 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
 	}
 
 }
+
+{
+		if ($postId) {
+			$post = $this->database
+				->table('posts')
+				->get($postId);
+			$post->update($data);
+		} else {
+			$post = $this->database
+				->table('posts')
+				->insert($data);
+		}
+	}

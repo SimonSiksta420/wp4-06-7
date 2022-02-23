@@ -47,4 +47,21 @@ final class PostFacade
 		]);
 		return;
 	}
+
+	public function editPost(int $postId, array $data)
+	{
+		$post = $this->database
+				->table('posts')
+				->get($postId);
+			$post->update($data);
+		return $post;
+	}
+
+	public function insertPost(array $data)
+	{
+		$post = $this->database
+		->table('posts')
+		->insert($data);
+		return $post;
+	}
 }

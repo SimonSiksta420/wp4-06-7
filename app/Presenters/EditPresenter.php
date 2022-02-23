@@ -5,6 +5,7 @@ namespace App\Presenters;
 use App\Model\PostFacade;
 use Nette;
 use Nette\Application\UI\Form;
+use stdClass;
 
 final class EditPresenter extends Nette\Application\UI\Presenter
 {
@@ -46,15 +47,11 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 		$postId = $this->getParameter('postId');
 
 		if ($postId) {
-			$post = $this->database
-				->table('posts')
-				->get($postId);
-			$post->update($data);
+			$post = $this->facade->editPost($postId, $data);
 		} else {
-			$post = $this->database
-				->table('posts')
-				->insert($data);
-		}
+			$post = $this->facade->insertPost(array $data);
+		}	
+
 		$this->flashMessage("Příspěvek byl úspěšně publikován.", 'success');
 		$this->redirect('Post:show', $post->id);
 	}
